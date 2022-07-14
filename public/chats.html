@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚡ AJINX : The Supermasive Chat</title>
+    <link rel="stylesheet" href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://font.googleapis.com/css2?family=Poppins:wght@300;500&display=swap">
+</head>
+<body>
+    <div class="container">
+        <div class="leftSide">
+  
+                    <div style="display: flex;margin: 10px;margin-left: 14px" class="flex overflow-auto">
+                        <div class="room-box">
+                      
+                    </div>
+
+            <!-- CHAT LIST -->
+            <div class="chatlist">
+              
+                      </div>
+          </div>
+      </div>
+  </div>
+            <!-- CHAT-BOX -->
+           
+</body>
+<style>
+    ::-webkit-scrollbar{
+        width: 6px;
+        height: 5px;
+        transition: 0.4s;
+    }
+    ::-webkit-scrollbar-thumb{
+        background-color: #fff;
+        border-radius: 25px;
+        opacity: 0;
+    }
+    ::-webkit-scrollbar-track{
+        background-color: transparent;
+    }
+    .chatlist:hover::-webkit-scrollbar-thumb{
+        background-color: rgb(123, 120, 120);
+    }
+    .flex:hover::-webkit-scrollbar-thumb{
+        background-color: rgb(123, 120, 120);
+    }
+    .chatbox:hover::-webkit-scrollbar-thumb{
+        background-color: rgb(123, 120, 120);
+    }
+    * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins',sans-serif;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(
+    #009688 0%,
+    #009688 130px,
+    #d9dbd5 130px,
+    #d9dbd5 100%
+  );
+}
+
+.container {
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    height: 99.9vh;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 1px 1px rgb(0 0 0 / 6%), 0 2px 5px 0 rgb(0 0 0 / 6%);
+    display: flex;
+}
+
+.container .leftSide {
+  position: relative;
+  background: #fff;
+  border-right: 1px solid rgba(0, 0, 0, 0.2);
+  max-width: 30%;
+}
+
+.container .rightSide {
+  position: relative;
+  flex: 70%;
+  background: rgba(243,244,246,1);
+}
+
+.container .rightSide::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.06;
+}
+
+.header {
+  position: relative;
+  width: 100%;
+  height: 60px;
+  background: #ededed;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 15px;
+}
+
+.userimg {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  overflow: hidden;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.cover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.nav_icons {
+  display: flex;
+}
+
+.nav_icons li {
+  display: flex;
+  list-style: none;
+  cursor: pointer;
+  color: #51585c;
+  font-size: 1.5em;
+  margin-left: 22px;
+}
+
+.search_chat {
+  position: relative;
+  width: 100%;
+  height: 50px;
+  background: #f6f6f6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 15px;
+}
+
+.search_chat div {
+  width: 100%;
+}
+
+.search_chat div input {
+  width: 100%;
+  outline: none;
+  border: none;
+  background: #fff;
+  padding: 6px;
+  height: 38px;
+  border-radius: 30px;
+  font-size: 14px;
+  padding-left: 40px;
+}
+
+.search_chat div input::placeholder {
+  color: #bbb;
+}
+
+.search_chat div ion-icon {
+  position: absolute;
+  left: 30px;
+  top: 14px;
+  font-size: 1.2em;
+}
+
+.chatlist {
+  position: relative;
+  height: calc(87% - 110px);
+  overflow: auto;
+}
+
+.chatlist .block {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  cursor: pointer;
+  width: 94%;
+  background: rgba(243,244,246,1);
+  margin-left: 3%;
+  border-radius: 5px;
+  margin-top: 12px;
+}
+
+.chatlist .block.active {
+    background: rgb(210, 189, 249);
+}
+
+.chatlist .block:hover {
+    background: rgb(223, 208, 252);
+}
+
+.chatlist .block .imgBox {
+  position: relative;
+  min-width: 45px;
+  height: 45px;
+  overflow: hidden;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.chatlist .block .details {
+  position: relative;
+  width: 100%;
+}
+
+.chatlist .block .details .listHead {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.chatlist .block .details .listHead h4 {
+  font-size: 1.1em;
+  color: #111;
+}
+
+.chatlist .block .details .listHead .time {
+  font-size: 0.75em;
+  color: #333;
+}
+
+.chatlist .block .details .listHead .time {
+  color: #111;
+}
+
+.chatlist .block.unread .details .listHead .time {
+  color: rgb(157 113 239);;
+}
+
+.message_p {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.message_p b {
+  background: rgb(157 113 239);;
+  color: #fff;
+  min-width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.75rem;
+}
+
+.message_p p {
+  color: #333;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  font-size: 0.9em;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.imgText {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.imgText h4 {
+  font-weight: 500;
+  line-height: 1.2em;
+  margin-left: 15px;
+}
+
+.imgText h4 span {
+  font-size: 0.8em;
+  color: #555;
+}
+
+/* CHAT BOX */
+.chatbox {
+  position: relative;
+  width: 100%;
+  height: calc(100% - 120px);
+  padding: 50px;
+  overflow-y: auto;
+}
+.chat_input {
+  position: relative;
+  width: 100%;
+  height: 60px;
+  background: #f0f0f0;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chat_input ion-icon {
+  cursor: pointer;
+  font-size: 1.8em;
+  color: #51585c;
+}
+
+ion-icon{
+    transition: 0.4s;
+}
+ion-icon:hover{
+    color: rgb(105, 38, 231);
+    padding: 8px;
+    background-color: rgba(51, 51, 51, 0.264);
+    border-radius: 50%;
+}
+.chat_input ion-icon:nth-child(1) {
+  margin-right: 15px;
+}
+
+.chat_input input {
+  position: relative;
+  width: 90%;
+  margin: 0 20px;
+  padding: 10px 20px;
+  border: none;
+  outline: none;
+  border-radius: 30px;
+  font-size: 1em;
+}
+.send{
+    color: #fff;
+    background-color: rgb(128 60 255);
+    padding: 7px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.4s;
+}
+.send:hover{
+    background-color: rgb(105, 38, 231);
+}
+.room-box{
+    background: #f3f4f6;
+    padding: 8px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: .4s;
+    text-align: center;
+    align-self: center;
+    margin-right: 1rem;
+}
+.room-box:hover{
+    background: rgb(223, 208, 252);
+}
+.friend_msg ,.my_msg{
+    display: flex;
+    margin-bottom: 3rem;
+}
+.my_msg{
+    flex-direction: row-reverse;
+}
+.friend_msg>img ,.my_msg>img{
+    border-radius: 9999px;
+    align-self: flex-end;
+    width: 3rem;
+    margin-right: 1rem;
+    max-width: 100%;
+    height: auto;
+    display: block;
+    border-style: solid;
+}
+.my_msg>img{
+    margin-left: 1rem;
+}
+.msg{
+    box-shadow: var(0 0 #0000,0 0 #0000),0 0 #0000,0 0 #0000,0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    padding: 1.5rem;
+    background-color: rgba(255,255,255,1);
+    border-radius: 1.5rem;
+    width: 24rem;
+    margin-bottom: 0.5rem;
+    border-bottom-left-radius: 0;
+}
+.my_msg .msg{
+    background-color: rgb(210, 189, 249);
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 1.5rem;
+}
+</style>
+</html>
