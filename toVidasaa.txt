@@ -1,0 +1,77 @@
+
+EEE sara
+podiii awulak thiyenawa....
+dan okkoma tikak patalila wagee thiyenne
+puluwannan oya new chat kiyana ekee username kiyana eka wenuwata create room kiyala ekak daanna(nattan create channel) 
+iitapasse thawa ekak daanna join channel kiyala
+
+ehema kiyanne mokada dan ooke username eka request karala eeke id eka ehema hoyaagena socket ehema yawana eka karanna leesi wadak nevei.
+api saamaanya krameeta nathuwa rooms kiyala ekakata join wenna demu kattiyata
+ee rooms walata oonanan dennek hitiyath awulak naa
+iitawadiya kattiya add karannath puluwan wenna hadannan.
+eeth username kiyana eken hadanna danma amaaru weewi.. rooms hadala eeka hariyata wada kiyala thahawuru karaama username eka gahala kattiyata join wenna kramayak hadamu...
+mama room.html kiyala file ekak hadala athi.. eekata thamay kattiya join wenne hodee.... mama chatRoom.html eka delete karala eekata move karanwa ehema unoth oyaa frontend walin karanna thiyena wenaskam tika karanna...
+
+
+
+miita Lassiy ^_^
+
+
+(update: 10.46 pm){
+eee rooms wada karoooo
+dan mama hadanna oona unique rooms create wenna
+eeth eeka hadanna kalin oyaa araka hadala kiyanna...
+}
+
+(update: 11.30 pm) {
+mama eka eka ayata aaweenika room ekak hadena widihata haduwa... ethakota eyaala rooms.html walata yanna kalin
+ara input box ekee enter karapu name ekee thiyena string ekata room ekak hadila eekata join wenawa... dan anith ayatath ee room ekata join wenna puluwan wenna hadanawa heta... adata wada ivaray/ Nethaka out :)
+}
+
+// leave your replies here...  :)
+mama therum gaththa vidiha:
+1. ape username eka dila enter karano
+2. ona nam channel ekak hari contact ekak hari create kara ganna puluvan
+3 .create new kiyana eke private chat ekaknam username eka gannava kiwwata ganne channel id eka 
+   e vunata eka vatenne channel list ekata neme contact list ekata
+   (api acc ekak create karanakota apita avenika channel ekak create venava)
+   
+harineda ~_~
+
+
+haako haako
+chats.html hariyanne naa wagee.... poddak danata hadanwada eka pattakin box ekakui anith patte chat eka pennanna.. wena mokuth daanna epaa ee dekata css daala theme ekata match karaama athi danata.
+aah hari mama hadaagatta. danata ehema thiyanna passe ara widihata hadamu
+
+haako haako ^_^
+
+
+*************************************************************************************************
+e me package.json kyana eka onada
+owwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+eeka delete karoth mulu project ekama ivaray 
+*************************************************************************************************
+hari hari
+
+
+
+
+
+
+
+
+
+
+
+naneda
+innava neda
+nethaka
+moko me paththe
+
+oya mokakda karanne
+nethala
+ko 
+
+nethaka innavada
+room.html vala js loader eke awlk
+eka hadanna

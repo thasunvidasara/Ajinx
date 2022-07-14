@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700" />
+  <title>Ajinx : The Supermasive Chat</title>
+</head>
+
+<body>
+  <div class="container">
+    <div class="space"></div>
+    <nav>
+      <ul class="nav-list">
+        <li class="nav-item">
+          <a href="#">AJINX</a>
+        </li>
+        <li class="nav-item">
+          <a href="#">About</a>
+        </li>
+        <li class="nav-item">
+          <a href="#">Friends</a>
+        </li>
+        <li class="nav-item">
+          <a href="#">Sign in</a>
+        </li>
+        <li class="nav-item">
+          <button class="btn-primary">Sign up</button>
+        </li>
+        <div class="menu-btn">
+          <div class="menu-btn-ele"></div>
+        </div>
+      </ul>
+    </nav>
+    <div class="menu-list">
+      <a href="#">About</a>
+      <a href="#">Friends</a>
+      <a onclick="signIn()">Sign in</a>
+      <button class="btn-primary" onclick="signUp()">Sign up</button>
+    </div>
+
+    <div class="connector">
+      <div class="secondary-connector">
+        <div class="logo">
+          <h1>AJINX</h1>
+          <h2>The Supermasive Chat</h2>
+        </div>
+        <div id="mainBtns">
+          <div class="body">
+            <a class="c-btn" id="mainC" href="channel.html"
+              onclick="loadChannels()"><span></span><span></span><span></span><span></span>#Channels</a>
+            <a class="c-btn" href="new-chat.html" onclick="privateChat()"
+              id="private"><span></span><span></span><span></span><span></span>New Chat</a>
+          </div>
+        </div>
+        <div class="login" id="login">
+          <input type="text" placeholder="Username" id="Username" onkeyup="isEmpty()"/>
+          <a id="go" onclick="submit()"><span>GO</span><i></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    var socket = io();
+  </script>
+  <script src="script.js"></script>
+</body>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Courier+Prime:ital@1&family=Poppins:wght@200&family=Roboto:wght@300&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Courier+Prime:ital@1&family=Poppins&family=Roboto:wght@300&display=swap');
+
+  :root {
+    --clr-primary: #6aeeb5;
+    --clr-primary-hover: #29e6a7;
+    --clr-primary-dark: #039d69;
+    --clr-gray100: #f0f7f8;
+    --clr-gray200: #cfd8dc;
+    --radius: 0.2rem;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+  }
+
+  .container {
+    width: 100%;
+    height: 100vh;
+    color: #fff;
+    background: linear-gradient(-45deg, rgb(38, 39, 39), rgb(28, 28, 30), rgb(36, 36, 36));
+    background-size: 400% 400%;
+    position: relative;
+    animation: change 10s ease-in-out infinite;
+  }
+
+  @keyframes change {
+    0% {
+      background-position: 0 50%;
+    }
+
+    50% {
+      background-position: 100% 50%;
+    }
+
+    100% {
+      background-position: 0 50%;
+    }
+  }
+
+  .space {
+    height: 20px;
+    width: 100%;
+    color: transparent;
+  }
+
+  .nav-list {
+    background: white;
+    box-shadow: 0px 0px 10px var(--clr-gray200);
+    padding: 1rem 0;
+    border-radius: var(--radius);
+    display: flex;
+    width: 90%;
+    justify-content: flex-end;
+    margin-left: auto;
+    margin-right: auto;
+    align-items: center;
+    font-family: Montserrat, sans-serif;
+  }
+
+  .nav-item {
+    list-style: none;
+    margin-right: 2rem;
+  }
+
+  .nav-item.open {
+    display: block;
+  }
+
+  .nav-item a,
+  .menu-list a {
+    text-decoration: none;
+    color: black;
+    transition: all 200ms ease-in;
+  }
+
+  .nav-item a:hover {
+    color: var(--clr-primary-dark);
+  }
+
+  .nav-item:first-child {
+    margin-right: auto;
+    margin-left: 2rem;
+  }
+
+  .btn-primary {
+    font-family: Montserrat, sans-serif;
+    font-size: 1rem;
+    background: var(--clr-primary);
+    border: none;
+    outline: none;
+    border-radius: var(--radius);
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: all 200ms ease-in;
+  }
+
+  .btn-primary:hover {
+    background: var(--clr-primary-hover);
+  }
+
+  .menu-btn {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .menu-btn-ele {
+    width: 25px;
+    height: 4px;
+    background: #333;
+    border-radius: 5px;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .menu-btn-ele::before,
+  .menu-btn-ele::after {
+    content: "";
+    position: absolute;
+    width: 25px;
+    height: 4px;
+    background: #333;
+    border-radius: 5px;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .menu-btn-ele::before {
+    transform: translateY(-8px);
+  }
+
+  .menu-btn-ele::after {
+    transform: translateY(8px);
+  }
+
+  .menu-btn.open .menu-btn-ele {
+    transform: translateX(-50px);
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .menu-btn.open .menu-btn-ele::before {
+    transform: rotate(45deg) translate(35px, -35px);
+  }
+
+  .menu-btn.open .menu-btn-ele::after {
+    transform: rotate(-45deg) translate(35px, 35px);
+  }
+
+  .menu-list {
+    height: 0;
+    transition: 0.3s;
+  }
+
+  .menu-list>a,
+  .menu-list>.btn-primary {
+    display: none;
+  }
+
+  .menu-list.open>a,
+  .menu-list.open>.btn-primary {
+    display: block;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .menu-list.open {
+    display: block;
+    height: auto;
+    background-color: #fff;
+    box-shadow: 0px 0px 10px var(--clr-gray200);
+    width: 80%;
+    margin-left: 10%;
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 5px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .connector {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 90vh;
+    margin-top: -49px;
+  }
+
+  .secondary-connector {
+    display: block;
+  }
+
+  .body {
+    display: flex;
+  }
+
+  .c-btn {
+    position: relative;
+    display: inline-block;
+    padding: 10px 30px;
+    text-decoration: none;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.4);
+    background: #262c37;
+    letter-spacing: 2px;
+    font-size: 16px;
+    transition: 0.3s;
+    font-family: sans-serif;
+    margin: 5px;
+  }
+
+  .c-btn:hover {
+    color: rgba(255, 255, 255, 1);
+  }
+
+  .c-btn span {
+    display: block;
+    position: absolute;
+    background: #2894ff;
+  }
+
+  .c-btn span:nth-child(1) {
+    left: 0;
+    bottom: 0;
+    width: 2px;
+    height: 100%;
+    transform: scaleY(0);
+    transform-origin: bottom;
+    transition: 0.3s;
+  }
+
+  .c-btn:hover span:nth-child(1) {
+    transform: scaleY(1);
+    transform-origin: top;
+    transition: 0.3s;
+  }
+
+  .c-btn span:nth-child(2) {
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 2px;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: 0.3s;
+  }
+
+  .c-btn:hover span:nth-child(2) {
+    transform: scaleX(1);
+    transform-origin: right;
+    transition: 0.3s;
+  }
+
+  .c-btn span:nth-child(3) {
+    right: 0;
+    bottom: 0;
+    width: 2px;
+    height: 100%;
+    transform: scaleY(0);
+    transform-origin: bottom;
+    transition: 0.3s;
+    transition-delay: 0.3s;
+  }
+
+  .c-btn:hover span:nth-child(3) {
+    transform: scaleY(1);
+    transform-origin: top;
+    transition: 0.3s;
+    transition-delay: 0.3s;
+  }
+
+  .c-btn span:nth-child(4) {
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 2px;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: 0.3s;
+    transition-delay: 0.3s;
+  }
+
+  .c-btn:hover span:nth-child(4) {
+    transform: scaleX(1);
+    transform-origin: right;
+    transition: 0.3s;
+    transition-delay: 0.3s;
+  }
+
+  .logo {
+    text-align: center;
+  }
+
+  h1 {
+    font-size: 100px;
+    font-family: 'Popins', sans-serif;
+  }
+
+  h2 {
+    font-family: 'Courier Prime', monospace;
+    margin-top: -16px;
+    margin-bottom: 20px;
+  }
+
+  .login input {
+    width: 250px;
+    padding: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    background: #1d2b3a;
+    border-radius: 5px;
+    outline: none;
+    color: #fff;
+    font-size: 1em;
+    transition: 0.3s;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
+  }
+
+  .login input:focus {
+    border: 1px solid #00dfc4;
+  }
+
+  .login a {
+    position: relative;
+    background-color: #444;
+    color: #fff;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 1em;
+    letter-spacing: 0.1em;
+    padding: 10px 30px;
+    transition: 0.3s;
+    top: 12px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 7%;
+    text-align: center;
+    cursor: not-allowed;
+    filter: gray;
+    -webkit-filter: grayscale(100%);
+  }
+
+  .login a.active{
+    filter: none;
+    -webkit-filter: none;
+    cursor: pointer;
+  }
+
+  .login a.active:hover {
+    letter-spacing: 0.25em;
+    background: #1e9bff;
+    color: #1e9bff;
+    box-shadow: 0 0 35px #1e9bff;
+    width: 13%;
+  }
+
+  .login a::before {
+    content: "";
+    position: absolute;
+    inset: 2px;
+    background: #27282c;
+  }
+
+  a span {
+    position: relative;
+    z-index: 1;
+    color: gray;
+  }
+
+  a.active span{
+    color: #fff;
+  }
+
+  a i {
+    position: absolute;
+    inset: 0;
+    display: block;
+  }
+
+  a i::before {
+    content: "";
+    position: absolute;
+    width: 10px;
+    height: 5px;
+    top: -3.5px;
+    left: 80%;
+    border: 2px solid #1e9bff;
+    background: #27282c;
+    transform: translateX(-50%);
+    transition: 0.3s;
+  }
+
+  a.active:hover i::before {
+    width: 20px;
+    left: 20%;
+  }
+
+  a i::after {
+    content: "";
+    position: absolute;
+    width: 10px;
+    height: 5px;
+    bottom: -3.5px;
+    left: 20%;
+    border: 2px solid #1e9bff;
+    transform: translateX(-50%);
+    background: #27282c;
+    transition: 0.3s;
+  }
+
+  a.active:hover i::after {
+    width: 20px;
+    left: 80%;
+  }
+
+  @media (max-width: 666px) {
+    .nav-item {
+      display: none;
+    }
+
+    .nav-item:first-child {
+      display: block;
+      font-size: 1.5rem;
+      justify-content: center;
+    }
+
+    .menu-btn {
+      width: 25px;
+      height: 25px;
+      margin-right: 25px;
+    }
+  }
+</style>
+<script>
+  const menuBtn = document.querySelector(".menu-btn");
+  const navList = document.querySelector(".menu-list");
+  let menuOpen = false;
+  menuBtn.addEventListener("click", () => {
+    if (!menuOpen) {
+      menuBtn.classList.add("open");
+      navList.classList.add("open");
+      menuOpen = true;
+    } else {
+      menuBtn.classList.remove("open");
+      navList.classList.remove("open");
+      menuOpen = false;
+    }
+  });
+
+  function isEmpty(){
+    let username = document.getElementById("Username").value;
+    let btn = document.getElementById("go");
+
+    if (username!=""){
+      btn.classList.add("active");
+    }else{
+      btn.classList.remove("active");
+    }
+  }
+</script>
+
+</html>

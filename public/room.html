@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Main Chat</title>
+  <script src="script.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
+
+</head>
+
+<body>
+  <div class="loader">
+    <div class="loader-body">
+      <div id="box"></div>
+      <div id="hill"></div>
+    </div>
+  </div>
+<div class="content">
+  <div class="online_box">
+    <div id="show">
+      <div class="ball"></div>
+    </div>
+    <div id="people_online">
+      People Online
+      <pre id="array"></pre>
+      <ul id="names"></ul>
+      <div id="users"></div>
+    </div>
+    <ul id="messages">
+    </ul>
+    <ul id="def_messages"></ul>
+  </div>
+  <div class="line"></div>
+  <div class="send_msg">
+    <form id="form" action="">
+      <input id="input" autocomplete="off" placeholder="Type a message" /><button><i class="bi bi-send"></i></button>
+    </form>
+  </div>
+</div>
+</body>
+<style>
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 5px;
+    transition: 0.4s;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #fff;
+    border-radius: 25px;
+    opacity: 0;
+  }
+
+  ::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+
+  body {
+    margin: 0;
+    padding-bottom: 3rem;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    overflow-left:hidden;
+    overflow-right:hidden;
+  }
+  #myMessage {
+    backrgound-color:black;
+  }
+  #form {
+    padding: 0.25rem;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    height: 3rem;
+    box-sizing: border-box;
+    border-radius: 10px;
+    width: 50%;
+    margin-left: 25%;
+  }
+
+  .online_box {
+    height: 94vh;
+    overflow: auto;
+    width: 100%;
+  }
+
+  #input {
+    border: none;
+    padding: 0 20px;
+    flex-grow: 1;
+    font-size: 16px;
+    border-radius: 10px;
+    border-bottom-right-radius: 0;
+    transition: .4s;
+    outline: none;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    color: #fff;
+  }
+
+  #input:hover {
+    color: #fff;
+    border: 0.5px solid #fff;
+  }
+
+  #input:focus {
+    color: #fff;
+    border: 0.6px solid #fff;
+  }
+
+  #show {
+    width: 50px;
+    height: 50px;
+    background-color: #fff;
+    background-size: cover;
+    border-radius: 50%;
+    margin-right: 30px;
+    margin-top: 20px;
+    margin-left: auto;
+    display: none;
+    cursor: pointer;
+  }
+
+  .ball {
+    width: 15px;
+    height: 15px;
+    z-index: 999;
+    background-color: #333;
+    border-radius: 50%;
+    outline: 2px solid rgb(0, 255, 0);
+    margin-left: auto;
+    margin-right: 3px;
+  }
+
+  #form>button {
+    background: rgb(140, 60, 253);
+    border: none;
+    width: 2.7rem;
+    height: 2.7rem;
+    margin-top: -1px;
+    margin-left: 10px;
+    border-radius: 50%;
+    outline: none;
+    color: #fff;
+    font-size: 18px;
+  }
+
+  #form>button:hover {
+    background: rgb(123, 30, 253);
+  }
+
+  #messages {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    margin-left: 26%;
+  }
+
+  #messages>li {
+    padding: 0.5rem 1rem;
+  }
+
+  html,
+  body {
+    margin: 0;
+    height: 94vh;
+    width: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+
+  #people_online {
+    position: fixed;
+    right: 3%;
+    top: 4%;
+    width: 20%;
+    padding: 10px;
+    min-width: 130px;
+    height: max-content;
+    min-height: 70px;
+    color: #fff;
+    text-align: center;
+    border-radius: 10px;
+    background: linear-gradient(135deg, rgba(169, 169, 169, 0.355), rgba(34, 34, 34, 0.03));
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    color: #fff;
+  }
+
+  #names>li {
+    list-style: none;
+    text-align: center;
+    width: auto;
+    background-color: #fff;
+    color: #333;
+    margin-left: -2rem;
+    padding: 10px;
+    padding-top: 6px;
+    padding-bottom: 10px;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    font-size: 19px;
+    transition: 0.4s;
+    text-transform: capitalize;
+  }
+
+  #names>li:hover {
+    background-color: rgb(210, 210, 210);
+  }
+
+  #messages>li {
+    max-width: 55%;
+    background: #fff;
+    padding: 8px;
+    padding-right: 12px;
+    height: auto;
+    width: max-content;
+    border-radius: 12px;
+    border-bottom-left-radius: 0;
+    color: #333;
+    font-size: 1em;
+    margin: 1rem;
+    margin-left: 2rem;
+    min-width: 10%;
+  }
+
+  .line {
+    height: 4px;
+    width: 50%;
+    background-color: rgb(206, 206, 206);
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+    margin-left: 25%;
+    transition: .3s;
+  }
+.content{
+  opacity: 0;
+}
+.loader{
+  width: 100%;
+  height: 100vh;
+  background-color: #404456;
+}
+.loader-body{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -2.7em;
+  margin-left: -2.7em;
+  width: 5.4em;
+  height: 5.4em;
+  background-color: #404456;
+}
+#hill {
+  position: absolute;
+  width: 7.1em;
+  height: 7.1em;
+  top: 1.7em;
+  left: 1.7em;
+  background-color: transparent;
+  border-left: .25em solid whitesmoke;
+  transform: rotate(45deg);
+}
+
+#hill:after {
+  content: '';
+  position: absolute;
+  width: 7.1em;
+  height: 7.1em;
+  left: 0;
+  background-color: #404456;
+}
+
+#box {
+  position: absolute;
+  left: 0;
+  bottom: -.1em;
+  width: 1em;
+  height: 1em;
+  background-color: transparent;
+  border: .25em solid whitesmoke;
+  border-radius: 15%;
+  transform: translate(0, -1em) rotate(-45deg);
+  animation: push 2.5s cubic-bezier(.79, 0, .47, .97) infinite;
+}
+
+@keyframes push {
+  0% {
+    transform: translate(0, -1em) rotate(-45deg);
+  }
+  5% {
+    transform: translate(0, -1em) rotate(-50deg);
+  }
+  20% {
+    transform: translate(1em, -2em) rotate(47deg);
+  }
+  25% {
+    transform: translate(1em, -2em) rotate(45deg);
+  }
+  30% {
+    transform: translate(1em, -2em) rotate(40deg);
+  }
+  45% {
+    transform: translate(2em, -3em) rotate(137deg);
+  }
+  50% {
+    transform: translate(2em, -3em) rotate(135deg);
+  }
+  55% {
+    transform: translate(2em, -3em) rotate(130deg);
+  }
+  70% {
+    transform: translate(3em, -4em) rotate(217deg);
+  }
+  75% {
+    transform: translate(3em, -4em) rotate(220deg);
+  }
+  100% {
+    transform: translate(0, -1em) rotate(-225deg);
+  }
+}
+  @media (max-width: 820px) {
+    body {
+      height: 96vh;
+    }
+
+    #messages {
+      margin-left: 5%;
+    }
+
+    #form {
+      width: 80%;
+      margin-left: 10%;
+    }
+
+    .online_box {
+      height: 95vh;
+    }
+
+    .line {
+      width: 80%;
+      margin-left: 10%;
+    }
+
+    #people_online {
+      display: none;
+      width: 40%;
+    }
+
+    #people_online.active {
+      display: flex;
+      top: 7%;
+    }
+
+    #show {
+      display: flex;
+    }
+
+    #people_online.active>#names>li {
+      margin-left: -22px;
+      padding-left: 22px;
+      padding-right: 22px;
+    }
+  }
+
+</style>
+
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+
+
+  var socket = io();
+  var names = document.getElementById('names');
+  var messages = document.getElementById("messages");
+  var form = document.getElementById("form");
+  var input = document.getElementById('input');
+  var roomNameSaved = window.localStorage.getItem('roomName');
+  socket.emit("myRoom", roomNameSaved);
+
+
+  socket.emit("userJoined", "userRequestData");
+
+
+  socket.on("Id", (arg, callback) => {
+    console.log(arg);
+    const socketId = arg;
+    callback("Id recieved");
+  });
+  var name = window.localStorage.getItem('name');
+  console.log(name);
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (input.value) {
+      let message = name + " : " + input.value;
+      socket.emit('message', { room: roomNameSaved, message: input.value });
+      input.value = '';
+
+    }
+  });
+ 
+let oldMessages = window.localStorage.getItem('messages');
+
+  
+var ittem = document.createElement('li');
+ittem.textContent = oldMessages;
+messages.appendChild(ittem);
+
+
+  
+
+
+  
+  function emitName() {
+    socket.emit("name", name)
+  }
+    let messageArray = [];
+  setTimeout(emitName, 1000)
+  socket.on('messageRedirect', function (msg) {
+    var item = document.createElement('li');
+    item.textContent = msg;
+    messages.appendChild(item);
+    window.scrollTo(0, document.body.scrollHeight);
+    //session storage seen eka 
+  
+    messageArray.push(msg);
+
+
+window.localStorage.setItem('messages', messageArray);
+
+  });
+  socket.on('messageRedirectToClient', function(msg){
+       var item = document.createElement('li');
+    item.setAttribute('id', 'myMessage');
+    item.style.backgroundColor = 'green';
+    item.style.cssText = 'margin:'
+    item.style.color = 'white';
+    item.textContent = msg;
+    messages.appendChild(item);
+    window.scrollTo(0, document.body.scrollHeight);
+    //session storage seen eka 
+  
+    messageArray.push(msg);
+
+
+window.localStorage.setItem('messages', messageArray);
+    
+  })
+  let users = [];
+
+  socket.on("nameRedirectOnLoad", (arg, responce) => {
+
+
+    arg.forEach(createElement())
+
+    function createElement() {
+      var n = document.createElement('li');
+      n.textContent = arg;
+      names.appendChild(n);
+
+    }
+
+
+  })
+  socket.on("nameRedirect", (arg, callback) => {
+    users.push(arg);
+    console.log(users);
+    var n = document.createElement('li');
+    n.textContent = arg;
+    names.appendChild(n);
+  })
+  // document.getElementById('users').innerText = JSON.stringify(users);
+</script>
+<script src="https://www.gstatic.com/firebasejs/7.8.0/firebase.js"></script>
+<script src="stylish.js" defer></script>
+<script src="/node_modules/firebase/firebase-database.js"></script>
+<script defer type="module" src="/firebase.js">
+
+</script>
+
+</html>
